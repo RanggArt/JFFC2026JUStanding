@@ -1,230 +1,197 @@
-:root {
-  --bg-deep: #0a0a0c;
-  --bg-panel: #141416;
-  --bg-panel-2: #1b1b1e;
-  --line: rgba(255, 255, 255, 0.08);
-  --red-1: #ff2d3b;
-  --red-2: #b8091a;
-  --water-1: #1fb6ff;
-  --water-2: #0e6bd6;
-  --gold: #ffc93c;
-  --silver: #cfd4da;
-  --bronze: #e08a4b;
-  --text-hi: #ffffff;
-  --text-mid: #a7abb3;
-  --text-dim: #5c6068;
+/* PANGGILAN FONT MOTOGP DARI FOLDER ASSETS */
+@font-face {
+  font-family: 'MotoGP Display';
+  src: url('assets/MotoGPDisplay-Bold.woff2') format('woff2'),
+       url('assets/MotoGPDisplay-Bold.woff') format('woff'),
+       url('assets/MotoGPDisplay-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MotoGP Text';
+  src: url('assets/MotoGPText-Regular.woff2') format('woff2'),
+       url('assets/MotoGPText-Regular.woff') format('woff'),
+       url('assets/MotoGPText-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MotoGP Text';
+  src: url('assets/MotoGPText-Bold.woff2') format('woff2'),
+       url('assets/MotoGPText-Bold.woff') format('woff'),
+       url('assets/MotoGPText-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
 
+:root {
+  --bg-deep: #0a0a0c; --bg-panel: #141416; --bg-panel-2: #1b1b1e;
+  --line: rgba(255, 255, 255, 0.08); --red-1: #ff2d3b; --red-2: #b8091a;
+  --water-1: #1fb6ff; --water-2: #0e6bd6; --text-hi: #ffffff;
+  --text-mid: #a7abb3; --text-dim: #5c6068;
+}
 * { box-sizing: border-box; }
 
-html, body {
-  margin: 0; padding: 0; min-height: 100%;
-  background-color: var(--bg-deep);
-  color: var(--text-hi);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  overflow-x: hidden;
+/* Ganti Font Family Utama ke MotoGP Text */
+html, body { 
+  margin: 0; padding: 0; min-height: 100%; 
+  background-color: var(--bg-deep); color: var(--text-hi); 
+  font-family: 'MotoGP Text', sans-serif; /* UPDATE FONT */
+  overflow-x: hidden; 
 }
 
-#app {
-  position: relative;
-  min-height: 100vh;
-  background:
-    repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 42px),
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(255,45,59,0.16), transparent 60%);
-}
+#app { position: relative; min-height: 100vh; background: repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 42px), radial-gradient(ellipse 90% 60% at 50% -10%, rgba(255,45,59,0.16), transparent 60%); }
+#fireCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.bg-kiri, .bg-kanan { position: fixed; bottom: 0; z-index: 2; width: 40vw; max-width: 350px; pointer-events: none; }
+.bg-kiri { left: 0; } .bg-kanan { right: 0; }
 
-/* ===== BACKGROUND & SPARKS ===== */
-#fireCanvas {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 1; pointer-events: none;
-}
-.bg-kiri, .bg-kanan {
-  position: fixed; bottom: 0; z-index: 2;
-  width: 40vw; max-width: 350px; pointer-events: none;
-}
-.bg-kiri { left: 0; }
-.bg-kanan { right: 0; }
-
-/* Tombol Fullscreen tanpa header */
-.top-actions {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 30;
-}
-.icon-btn {
-  width: 42px; height: 42px; border-radius: 10px;
-  border: 1px solid var(--line); background: var(--bg-panel);
-  color: var(--text-mid); display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: .18s;
-}
-.icon-btn:hover { color: var(--text-hi); border-color: rgba(255, 255, 255, 0.2); background: var(--bg-panel-2); }
-.icon-btn svg { width: 19px; height: 19px; }
-
-/* ===== HERO TITLE & LOGO ===== */
 .hero { text-align: center; padding: 40px 20px 22px; position: relative; z-index: 5; }
-.main-logo {
-  height: 90px;
-  margin: 0 auto 16px auto;
-  display: block;
-  object-fit: contain;
-}
-.hero .eyebrow {
-  font-size: 12.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--text-mid); margin-bottom: 8px;
-}
-.hero h1 {
-  margin: 0; 
-  /* FONT GAYA MOTOGP */
-  font-family: 'Racing Sans One', sans-serif; 
-  font-style: italic; 
-  letter-spacing: 0.05em; 
-  text-transform: uppercase;
-  font-size: clamp(40px, 9vw, 80px); line-height: 1;
-  background: linear-gradient(90deg, var(--red-1), var(--red-2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  transition: .25s;
-}
+.main-logo { height: 90px; margin: 0 auto 16px auto; display: block; object-fit: contain; }
+.hero .eyebrow { font-family: 'MotoGP Text', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 8px; }
+
+/* Ganti Judul ke MotoGP Display */
+.hero h1 { margin: 0; font-family: 'MotoGP Display', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; font-size: clamp(40px, 9vw, 80px); line-height: 1; background: linear-gradient(90deg, var(--red-1), var(--red-2)); -webkit-background-clip: text; background-clip: text; color: transparent; transition: .25s; }
 .hero h1.braveheart { background: linear-gradient(90deg, var(--water-1), var(--water-2)); -webkit-background-clip: text; background-clip: text; }
 .hero .sub { margin-top: 8px; font-size: 13.5px; font-weight: 700; color: var(--text-mid); letter-spacing: .1em; text-transform: uppercase; }
 
-/* ===== CATEGORY TABS ===== */
 .tabs { display: flex; justify-content: center; gap: 10px; margin: 24px 20px 8px; position: relative; z-index: 5; }
-.tab-btn {
-  padding: 12px 26px; border-radius: 999px; border: 1px solid var(--line);
-  background: var(--bg-panel); color: var(--text-mid); font-size: 13.5px; font-weight: 800;
-  letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: .18s;
-}
+.tab-btn { padding: 12px 26px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-panel); color: var(--text-mid); font-size: 13.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: .18s; }
 .tab-btn.active.hl { background: linear-gradient(135deg, var(--red-1), var(--red-2)); color: #fff; border: none; box-shadow: 0 6px 18px rgba(255, 45, 59, 0.35); }
 .tab-btn.active.bh { background: linear-gradient(135deg, var(--water-1), var(--water-2)); color: #fff; border: none; box-shadow: 0 6px 18px rgba(31, 182, 255, 0.35); }
-.tab-btn:hover { color: #fff; }
 .rule-hint { text-align: center; position: relative; z-index: 5; font-size: 11.5px; color: var(--text-dim); margin: 0 20px 20px; font-weight: 600; }
 
-/* ===== LEADER BANNER ===== */
 .leader-banner { max-width: 960px; margin: 0 auto 34px; padding: 0 20px; position: relative; z-index: 5; }
+.leader-card-wrap { position: relative; }
 .leader-card { display: flex; align-items: center; gap: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 18px 40px -10px rgba(255, 45, 59, 0.35); min-height: 118px; }
 .leader-card.hl { background: linear-gradient(90deg, var(--red-2) 0%, var(--red-1) 55%, #7a0812 100%); }
 .leader-card.bh { background: linear-gradient(90deg, var(--water-2) 0%, var(--water-1) 55%, #063a63 100%); box-shadow: 0 18px 40px -10px rgba(31, 182, 255, 0.35); }
-.leader-avatar {
-  width: 118px; min-width: 118px; height: 118px;
-  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.35));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 36px; color: #fff;
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-}
-.leader-mid { flex: 1; padding: 14px 22px; min-width: 0; }
-.leader-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); margin-bottom: 6px; }
-.leader-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 6px #fff; }
-.leader-name { font-weight: 800; letter-spacing: .01em; font-size: clamp(19px, 3.4vw, 30px); color: #fff; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.leader-meta { font-size: 12px; color: rgba(255, 255, 255, 0.75); font-weight: 600; margin-top: 4px; }
-.leader-score-box { width: 160px; min-width: 160px; height: 118px; background: rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 1px solid rgba(255, 255, 255, 0.15); padding: 0 8px; }
-.leader-score-box .lbl { font-size: 10px; font-weight: 700; letter-spacing: .16em; color: rgba(255, 255, 255, 0.6); margin-bottom: 2px; text-transform: uppercase; }
-.leader-score-box .val { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(22px, 3.6vw, 34px); color: #fff; text-align: center; }
-.leader-empty { text-align: center; padding: 30px; color: var(--text-dim); font-size: 13px; font-weight: 600; border: 1px dashed var(--line); border-radius: 14px; background: rgba(20,20,22,0.8); backdrop-filter: blur(5px); }
 
-/* ===== TABLE ===== */
+/* Ganti Font Inisial Pemimpin ke MotoGP Display */
+.leader-avatar-slot { width: 118px; min-width: 118px; height: 118px; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.35)); display: flex; align-items: center; justify-content: center; font-family: 'MotoGP Display', sans-serif; font-weight: bold; font-size: 42px; color: #fff; border-right: 1px solid rgba(255, 255, 255, 0.15); }
+.leader-photo { position: absolute; z-index: 8; object-fit: cover; object-position: top center; filter: drop-shadow(0 12px 26px rgba(0,0,0,0.55)); pointer-events: none; }
+
+.leader-mid { flex: 1; padding: 14px 22px; min-width: 0; }
+.leader-tag { font-family: 'MotoGP Text', sans-serif; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: bold; letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); margin-bottom: 6px; }
+.leader-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 6px #fff; }
+.leader-name { font-weight: bold; letter-spacing: .01em; font-size: clamp(19px, 3.4vw, 30px); color: #fff; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.leader-meta { font-size: 12px; color: rgba(255, 255, 255, 0.75); font-weight: normal; margin-top: 4px; }
+
+/* Ganti Angka Leader ke MotoGP Display */
+.leader-score-box { width: 160px; min-width: 160px; height: 118px; background: rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 1px solid rgba(255, 255, 255, 0.15); padding: 0 8px; }
+.leader-score-box .lbl { font-size: 10px; font-weight: bold; letter-spacing: .16em; color: rgba(255, 255, 255, 0.6); margin-bottom: 2px; text-transform: uppercase; }
+.leader-score-box .val { font-family: 'MotoGP Display', sans-serif; font-weight: bold; font-size: clamp(22px, 3.6vw, 34px); color: #fff; text-align: center; }
+
 .table-wrap { max-width: 960px; margin: 0 auto 50px; padding: 0 20px; position: relative; z-index: 5; }
 .table-head { display: grid; gap: 10px; padding: 0 18px 10px; align-items: center; }
-.table-head span { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); }
-.table-wrap.cat-hl .table-head, .table-wrap.cat-hl .row { grid-template-columns: 56px 1fr 100px 110px 130px 40px; }
-.table-wrap.cat-bh .table-head, .table-wrap.cat-bh .row { grid-template-columns: 56px 1fr 170px 130px 40px; }
+.table-head span { font-size: 10.5px; font-weight: bold; letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); }
 
-.row { display: grid; gap: 10px; align-items: center; background: rgba(20,20,22,0.85); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; transition: .15s; cursor: pointer; }
-.row:hover { border-color: rgba(255, 255, 255, 0.18); background: rgba(27,27,30,0.95); }
+.table-wrap.cat-hl .table-head, .table-wrap.cat-hl .row { grid-template-columns: 56px 1fr 100px 110px 130px; }
+.table-wrap.cat-bh .table-head, .table-wrap.cat-bh .row { grid-template-columns: 56px 1fr 170px 130px; }
+
+.row { display: grid; gap: 10px; align-items: center; background: rgba(20,20,22,0.85); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
 .row.rank-1.hl { border-color: rgba(255, 45, 59, 0.45); box-shadow: 0 0 0 1px rgba(255, 45, 59, 0.2) inset; }
 .row.rank-1.bh { border-color: rgba(31, 182, 255, 0.45); box-shadow: 0 0 0 1px rgba(31, 182, 255, 0.2) inset; }
 
-.rank-num { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 20px; color: var(--text-mid); text-align: center; }
+/* Ganti Nomor Urut ke MotoGP Display */
+.rank-num { font-family: 'MotoGP Display', sans-serif; font-weight: bold; font-size: 24px; color: var(--text-mid); text-align: center; }
 .row.rank-1.hl .rank-num { color: var(--red-1); }
 .row.rank-1.bh .rank-num { color: var(--water-1); }
 .row.rank-2 .rank-num { color: var(--silver); }
 .row.rank-3 .rank-num { color: var(--bronze); }
 
 .name-cell { min-width: 0; }
-.name-cell .nm { font-weight: 800; font-size: 15.5px; text-transform: uppercase; letter-spacing: .01em; color: var(--text-hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.name-cell .gap { font-size: 11.5px; font-weight: 700; color: var(--text-dim); margin-top: 2px; }
+.name-cell .nm { font-weight: bold; font-size: 15.5px; text-transform: uppercase; letter-spacing: .01em; color: var(--text-hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row.bh .sub-data span:first-child { background: linear-gradient(90deg, #1fb6ff, #3a5bff); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold; }
+.name-cell .gap { font-size: 11.5px; color: #22e07a !important; margin-top: 2px; font-weight: bold; text-shadow: 0 0 10px rgba(34, 224, 122, 0.35); }
 
 .data-cell { text-align: center; }
-.data-cell .v { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: var(--text-mid); }
+.data-cell .v { font-family: 'MotoGP Text', monospace; font-weight: bold; font-size: 14px; color: var(--text-mid); }
 
 .score-box { border-radius: 9px; padding: 9px 6px; text-align: center; }
 .score-box.hl { background: linear-gradient(135deg, var(--red-1), var(--red-2)); }
 .score-box.bh { background: linear-gradient(135deg, var(--water-1), var(--water-2)); }
-.score-box .v { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 18px; color: #fff; }
+
+/* Ganti Angka Skor Tabel ke MotoGP Display */
+.score-box .v { font-family: 'MotoGP Display', sans-serif; font-weight: bold; font-size: 20px; color: #fff; }
+
 .row.rank-1.hl .score-box { box-shadow: 0 6px 18px rgba(255, 45, 59, 0.4); }
 .row.rank-1.bh .score-box { box-shadow: 0 6px 18px rgba(31, 182, 255, 0.4); }
 
-.row-actions { display: flex; justify-content: flex-end; }
-.del-btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--text-dim); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: .15s; }
-.del-btn:hover { color: var(--red-1); border-color: rgba(255, 45, 59, 0.4); }
-.del-btn svg { width: 14px; height: 14px; }
-
 .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); background: rgba(20,20,22,0.8); border-radius: 12px; border: 1px dashed var(--line); backdrop-filter: blur(5px); }
-.empty-state svg { width: 44px; height: 44px; margin-bottom: 14px; opacity: .5; }
-.empty-state p { font-size: 13.5px; font-weight: 600; margin: 0; }
+.empty-state p { font-size: 13.5px; font-weight: normal; margin: 0; }
 
-/* ===== FAB ===== */
-.fab-stack { position: fixed; bottom: 26px; right: 26px; z-index: 35; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-.fab { display: flex; align-items: center; gap: 9px; padding: 15px 22px; border-radius: 999px; border: none; cursor: pointer; font-size: 14px; font-weight: 800; letter-spacing: .01em; transition: .18s; }
-.fab.primary { background: linear-gradient(135deg, var(--red-1), var(--red-2)); color: #fff; box-shadow: 0 10px 28px -6px rgba(255, 45, 59, 0.55); }
-.fab.secondary { background: var(--bg-panel); color: var(--text-hi); border: 1px solid var(--line); box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); }
-.fab:hover { transform: translateY(-2px); }
-.fab svg { width: 18px; height: 18px; }
+footer { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 20px 20px 100px; color: var(--text-dim); font-size: 11px; position: relative; z-index: 5; letter-spacing: .05em; }
+.footer-credit { font-size: 11.5px; font-weight: bold; letter-spacing: .06em; }
+.footer-credit .name { background: linear-gradient(90deg, #1fb6ff, #3a5bff, #7b5cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-/* ===== DRAWER INPUT ===== */
-.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 50; }
-.overlay.open { opacity: 1; pointer-events: auto; }
-.drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(440px, 92vw); background: var(--bg-panel); border-left: 1px solid var(--line); transform: translateX(100%); transition: transform .3s cubic-bezier(.4, 0, .2, 1); z-index: 60; display: flex; flex-direction: column; overflow: hidden; }
-.drawer.open { transform: translateX(0); }
-.drawer-head { padding: 22px 24px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
-.drawer-head h2 { margin: 0; font-size: 16px; font-weight: 800; }
-.drawer-body { flex: 1; overflow-y: auto; padding: 22px 24px 40px; }
-.drawer-body::-webkit-scrollbar { width: 6px; }
-.drawer-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 99px; }
-
-.field { margin-bottom: 20px; }
-.field label { display: block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-dim); margin-bottom: 9px; }
-select, .text-input, .num-input {
-  width: 100%; padding: 13px 14px; border-radius: 10px; font-size: 14px; font-weight: 600;
-  background: var(--bg-panel-2); border: 1px solid var(--line); color: var(--text-hi);
-  font-family: inherit; appearance: none;
-}
-select {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a7abb3' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
-  background-repeat: no-repeat; background-position: right 14px center; background-size: 16px;
-}
-.toggle-group { display: flex; gap: 8px; }
-.toggle-opt { flex: 1; padding: 12px 10px; border-radius: 10px; text-align: center; font-size: 13px; font-weight: 700; background: var(--bg-panel-2); border: 1px solid var(--line); color: var(--text-mid); cursor: pointer; transition: .15s; }
-.toggle-opt.active.hl { background: linear-gradient(135deg, var(--red-1), var(--red-2)); color: #fff; border: none; }
-.toggle-opt.active.bh { background: linear-gradient(135deg, var(--water-1), var(--water-2)); color: #fff; border: none; }
-.toggle-opt.disabled { opacity: .5; pointer-events: none; }
-.row2 { display: flex; gap: 12px; }
-.row2 .field { flex: 1; }
-.hint { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; margin-top: 8px; }
-
-.drawer-foot { padding: 18px 24px; border-top: 1px solid var(--line); display: flex; gap: 10px; }
-.btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 18px; border-radius: 10px; font-size: 14px; font-weight: 700; border: 1px solid var(--line); background: var(--bg-panel-2); color: var(--text-hi); cursor: pointer; transition: .18s; flex: 1; }
-.btn.primary { background: linear-gradient(135deg, var(--red-1), var(--red-2)); border: none; color: #fff; }
-.btn:hover { opacity: .92; }
-
-footer { text-align: center; padding: 20px 20px 100px; color: var(--text-dim); font-size: 11px; position: relative; z-index: 5; letter-spacing: .05em; }
+#musicToggle { position: fixed; top: 18px; right: 18px; z-index: 999; width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18); background: linear-gradient(135deg, rgba(255,45,59,0.85), rgba(255,123,0,0.85)); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.35); transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease; }
+#musicToggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.45); }
+#musicToggle.muted { filter: grayscale(1) brightness(0.75); }
+#musicToggle .bars { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
+#musicToggle .bars span { width: 3px; background: #fff; border-radius: 2px; display: block; animation: musicBar 0.9s ease-in-out infinite; }
+#musicToggle .bars span:nth-child(1) { height: 6px; animation-delay: 0s; }
+#musicToggle .bars span:nth-child(2) { height: 16px; animation-delay: 0.15s; }
+#musicToggle .bars span:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+#musicToggle .bars span:nth-child(4) { height: 14px; animation-delay: 0.45s; }
+#musicToggle.muted .bars span { animation-play-state: paused; height: 4px !important; }
+@keyframes musicBar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
 
 @media (max-width: 640px) {
   .table-head { display: none; }
-  .table-wrap.cat-hl .row { grid-template-columns: 40px 1fr 40px; grid-template-areas: "rank name score" "rank sub score"; row-gap: 4px; }
-  .table-wrap.cat-bh .row { grid-template-columns: 40px 1fr 40px; grid-template-areas: "rank name score" "rank sub score"; row-gap: 4px; }
-  .rank-num { grid-area: rank; font-size: 17px; }
+  .table-wrap.cat-hl .row { grid-template-columns: 36px 1fr 78px; grid-template-areas: "rank name score" "rank sub score"; row-gap: 4px; }
+  .table-wrap.cat-bh .row { grid-template-columns: 36px 1fr 78px; grid-template-areas: "rank name score" "rank sub score"; row-gap: 4px; }
+  .rank-num { grid-area: rank; font-size: 19px; }
   .name-cell { grid-area: name; }
   .name-cell .nm { font-size: 14px; }
   .data-cell { display: none; }
   .sub-data { display: flex; gap: 12px; margin-top: 3px; grid-area: sub; }
-  .sub-data span { font-size: 11px; color: var(--text-dim); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-  .score-box { grid-area: score; padding: 7px 4px; }
-  .score-box .v { font-size: 15px; }
-  .row-actions { display: none; }
-  .leader-card { flex-wrap: wrap; }
-  .leader-avatar { width: 80px; min-width: 80px; height: 80px; font-size: 26px; }
-  .leader-score-box { width: 100%; min-width: 100%; height: 60px; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.15); flex-direction: row; gap: 10px; }
-  .fab span { display: none; }
-  .fab { padding: 16px; }
+  .sub-data span { font-size: 11px; color: var(--text-dim); font-weight: normal; font-family: 'MotoGP Text', monospace; }
+  .score-box { grid-area: score; padding: 9px 6px; margin: 0 auto; width: 100%; align-self: center; }
+  .score-box .v { font-size: 17px; }
+  .leader-card { flex-wrap: nowrap; align-items: stretch; }
+  .leader-avatar-slot { width: 76px; min-width: 76px; height: auto; font-size: 26px; align-self: stretch; }
+  .leader-mid { padding: 12px 10px; }
+  .leader-name { font-size: 17px; }
+  .leader-score-box { width: 92px; min-width: 92px; height: auto; align-self: stretch; border-left: 1px solid rgba(255, 255, 255, 0.15); border-top: none; flex-direction: column; gap: 2px; padding: 0 6px; }
+  .leader-score-box .val { font-size: 21px; }
+  #musicToggle { top: 12px; right: 12px; width: 46px; height: 46px; }
+}
+
+.row:hover { border-color: var(--line); background: rgba(20,20,22,0.85); cursor: default; }
+.row-actions { display: none !important; }
+.fab-stack { display: none !important; }
+.top-actions { display: none !important; }
+
+/* ===== Intro Screen "JUARA" ===== */
+.intro-screen {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 20px; text-align: center; padding: 40px 24px;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(255,45,59,0.28), transparent 60%), #050506;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+.intro-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro-logo { height: 100px; object-fit: contain; filter: drop-shadow(0 0 22px rgba(255,45,59,0.45)); margin-bottom: 4px; }
+.intro-eyebrow { font-size: 13px; font-weight: bold; letter-spacing: .22em; text-transform: uppercase; color: var(--text-mid); font-family: 'MotoGP Text', sans-serif;}
+
+/* Ganti Font Judul Intro ke MotoGP Display */
+.intro-title { margin: 0; font-family: 'MotoGP Display', sans-serif; letter-spacing: .03em; text-transform: uppercase; font-size: clamp(24px, 5.5vw, 46px); line-height: 1.25; color: #fff; }
+.intro-title .juara {
+  display: inline-block; margin-top: 8px; font-size: clamp(34px, 7.5vw, 66px);
+  background: linear-gradient(90deg, var(--red-1), #ff7b00, var(--red-1));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 30px rgba(255,45,59,0.4);
+}
+.btn-lihat {
+  margin-top: 14px; padding: 17px 56px; border-radius: 999px; border: none; cursor: pointer;
+  font-size: 15px; font-weight: bold; letter-spacing: .12em; text-transform: uppercase; color: #fff;
+  background: linear-gradient(135deg, var(--red-1), var(--red-2));
+  box-shadow: 0 12px 32px -6px rgba(255, 45, 59, 0.6);
+  transition: transform .18s ease, box-shadow .18s ease;
+  font-family: 'MotoGP Text', sans-serif;
+}
+.btn-lihat:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 36px -6px rgba(255, 45, 59, 0.75); }
+.btn-lihat:active { transform: translateY(0) scale(0.97); }
+@media (max-width: 640px) {
+  .intro-logo { height: 76px; }
 }
