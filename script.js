@@ -1,5 +1,5 @@
 // ==========================================
-// 1. LOGIKA ANIMASI API KANVAS
+// 1. LOGIKA ANIMASI API KANVAS ok
 // ==========================================
 const canvas = document.getElementById('fireCanvas');
 const ctx = canvas.getContext('2d');
