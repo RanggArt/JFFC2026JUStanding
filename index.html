@@ -3,26 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JFFC 2026 — Standing Kontingen</title>
-  
-  <!-- Memanggil Fonts -->
+  <title>JFFC 2026 — Standing Kontingen (Read Only)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  
-  <!-- Memanggil file CSS -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Menghilangkan tombol agar menjadi view-only */
+    .row:hover { border-color: var(--line); background: rgba(20,20,22,0.85); cursor: default; }
+    .row-actions { display: none !important; }
+    .fab-stack { display: none !important; }
+  </style>
 </head>
 <body>
-  
-  <!-- Canvas untuk percikan api -->
   <canvas id="fireCanvas"></canvas>
-
-  <!-- Gambar Background Kiri dan Kanan -->
   <img src="assets/bghutjak_kiri.png" class="bg-kiri" alt="Ornamen Kiri">
   <img src="assets/bghutjak_kanan.png" class="bg-kanan" alt="Ornamen Kanan">
-
-  <!-- APLIKASI UTAMA JFFC -->
+  
   <div id="app">
     <header>
       <div class="brand">
@@ -36,11 +33,6 @@
           <div class="title">JAKARTA FIREFIGHTER CHALLENGE</div>
         </div>
       </div>
-      <div class="header-actions">
-        <button class="icon-btn" id="fullscreenBtn" title="Layar penuh">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
-      </div>
     </header>
 
     <div class="hero">
@@ -50,8 +42,8 @@
     </div>
 
     <div class="tabs">
-      <button class="tab-btn active hl" id="tabHL" data-cat="Hoselaying">Hoselaying</button>
-      <button class="tab-btn" id="tabBH" data-cat="Braveheart">Braveheart</button>
+      <button class="tab-btn active hl" id="tabHL">Hoselaying</button>
+      <button class="tab-btn" id="tabBH">Braveheart</button>
     </div>
     <div class="rule-hint" id="ruleHint">Peringkat berdasarkan Nilai Akhir/Score TERTINGGI</div>
 
@@ -66,93 +58,154 @@
       </div>
       <div id="tableBody"></div>
     </div>
-
-    <footer>Data tersimpan otomatis di perangkat ini</footer>
-
-    <div class="fab-stack">
-      <button class="fab secondary" id="shareBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M12 3v13"/><path d="m8 12 4 4 4-4"/></svg>
-        <span>Unduh HTML (View)</span>
-      </button>
-      <button class="fab primary" id="openDrawerBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        <span>Input Data</span>
-      </button>
-    </div>
-
-    <!-- Modals untuk Form Input -->
-    <div class="overlay" id="overlay"></div>
-    <div class="drawer" id="drawer">
-      <div class="drawer-head">
-        <h2 id="drawerTitle">Input Data</h2>
-        <button class="icon-btn" id="closeDrawer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="drawer-body">
-        <div class="field">
-          <label>Kategori Lomba</label>
-          <div class="toggle-group">
-            <div class="toggle-opt active hl" id="optHL" data-cat="Hoselaying">Hoselaying</div>
-            <div class="toggle-opt bh" id="optBH" data-cat="Braveheart">Braveheart</div>
-          </div>
-          <div class="hint" id="catHint">Nilai Akhir/Score tertinggi = peringkat 1.</div>
-        </div>
-
-        <div class="field">
-          <label>Kontingen</label>
-          <select id="selKontingen">
-            <option value="">— Pilih Kontingen —</option>
-            <option>Penjaringan</option>
-            <option>Pademangan</option>
-            <option>Tanjung Priok</option>
-            <option>Koja</option>
-            <option>Kelapa Gading</option>
-            <option>Cilincing</option>
-            <option>Kepulauan Seribu Utara</option>
-            <option>Kepulauan Seribu Selatan</option>
-            <option>Seksi Operasi</option>
-          </select>
-        </div>
-
-        <div id="fieldsHL">
-          <div class="row2">
-            <div class="field">
-              <label>Nilai</label>
-              <input type="number" class="num-input" id="inpNilai" placeholder="0" step="any">
-            </div>
-            <div class="field">
-              <label>Waktu</label>
-              <input type="text" class="text-input" id="inpWaktuHL" placeholder="mm:ss.ms">
-            </div>
-          </div>
-          <div class="field">
-            <label>Nilai Akhir / Score</label>
-            <input type="number" class="num-input" id="inpScore" placeholder="0" step="any">
-            <div class="hint">Jika kontingen ini sudah pernah diinput di Hoselaying, datanya akan diperbarui otomatis.</div>
-          </div>
-        </div>
-
-        <div id="fieldsBH" style="display:none">
-          <div class="field">
-            <label>Nama Atlet</label>
-            <input type="text" class="text-input" id="inpNamaAtlet" placeholder="Contoh: Bripka Andi">
-          </div>
-          <div class="field">
-            <label>Waktu</label>
-            <input type="text" class="text-input" id="inpWaktuBH" placeholder="mm:ss.ms">
-            <div class="hint">Waktu TERCEPAT (terendah) otomatis jadi peringkat 1.</div>
-          </div>
-        </div>
-      </div>
-      <div class="drawer-foot">
-        <button class="btn" id="cancelBtn">Batal</button>
-        <button class="btn primary" id="saveBtn">Simpan</button>
-      </div>
-    </div>
+    <footer>Tampilan Read-Only (Terakhir Disimpan)</footer>
   </div>
 
-  <!-- Memanggil file JavaScript -->
-  <script src="script.js"></script>
+  <script>
+    // Data klasemen disuntikkan langsung di file ekspor ini
+    const data = [{"id":"1783568136702lv8m4olq4od","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Singgih","waktu":"06:20","score":380},{"id":"1783568634407by880n6ll7a","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Viky Ferdiansyah","waktu":"06:41","score":401},{"id":"178356865832271t6eifddo6","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Handoyo","waktu":"05:38","score":338},{"id":"1783568676958vb7jh1fm4fg","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"Raihan Akbar","waktu":"08:59","score":539},{"id":"1783568720892887e3ipnd13","kategori":"Braveheart","kontingen":"Kepulauan Seribu Utara","namaAtlet":"Budi Kurniawan","waktu":"08:09","score":489},{"id":"1783568751882sh69iyj903l","kategori":"Braveheart","kontingen":"Kelapa Gading","namaAtlet":"Alfredo","waktu":"10:21","score":621},{"id":"17835687822632am468qv7j9","kategori":"Braveheart","kontingen":"Pademangan","namaAtlet":"Kahidar","waktu":"10:30","score":630},{"id":"17835688264747qufwxn9ay8","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"Rico Sahroni","waktu":"10:06","score":606}];
+    let activeCat = 'Braveheart';
+
+    // Animasi Api
+    const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+    let sparks = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
+    class Spark {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + Math.random() * 100;
+            this.size = Math.random() * 4 + 1;
+            this.speedY = Math.random() * -3 - 1;
+            this.speedX = Math.random() * 2 - 1;
+            this.life = 1;
+            const colors = ['#ffc93c', '#ff2d3b', '#e08a4b', '#ff7b00'];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        update() {
+            this.x += this.speedX; this.y += this.speedY;
+            if (this.size > 0.1) this.size -= 0.03;
+            this.life -= 0.005;
+        }
+        draw() {
+            ctx.globalAlpha = Math.max(0, this.life);
+            ctx.fillStyle = this.color; ctx.shadowBlur = 10; ctx.shadowColor = this.color;
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (sparks.length < 150) sparks.push(new Spark());
+        for (let i = 0; i < sparks.length; i++) {
+            sparks[i].update(); sparks[i].draw();
+            if (sparks[i].life <= 0 || sparks[i].size <= 0.1) { sparks.splice(i, 1); i--; }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Fungsi Render Tabel Read-Only
+    const leaderBanner = document.getElementById('leaderBanner');
+    const tableBody = document.getElementById('tableBody');
+    const tableWrap = document.getElementById('tableWrap');
+    const headHL = document.getElementById('headHL');
+    const headBH = document.getElementById('headBH');
+    const heroTitle = document.getElementById('heroTitle');
+    const ruleHint = document.getElementById('ruleHint');
+    const tabHL = document.getElementById('tabHL');
+    const tabBH = document.getElementById('tabBH');
+
+    const CAT_INFO = {
+      Hoselaying: { cls:'hl', rule:'Peringkat berdasarkan Nilai Akhir/Score TERTINGGI', order:'desc' },
+      Braveheart: { cls:'bh', rule:'Peringkat individu atlet berdasarkan WAKTU TERCEPAT (terendah)', order:'asc' }
+    };
+    function fmtNum(n){ const num = Number(n)||0; return num % 1 === 0 ? num.toString() : num.toFixed(2); }
+    function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function initials(name){ return String(name).trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+    
+    function getSorted(cat){
+      const rows = data.filter(d=>d.kategori === cat);
+      const order = CAT_INFO[cat].order;
+      return [...rows].sort((a,b)=> order === 'asc' ? (a.score-b.score) : (b.score-a.score));
+    }
+    
+    function render(){
+      heroTitle.textContent = activeCat.toUpperCase();
+      heroTitle.classList.toggle('braveheart', activeCat === 'Braveheart');
+      ruleHint.textContent = CAT_INFO[activeCat].rule;
+      tabHL.classList.toggle('active', activeCat==='Hoselaying');
+      tabBH.classList.toggle('active', activeCat==='Braveheart');
+      tableWrap.classList.toggle('cat-hl', activeCat==='Hoselaying');
+      tableWrap.classList.toggle('cat-bh', activeCat==='Braveheart');
+      headHL.style.display = activeCat==='Hoselaying' ? 'grid' : 'none';
+      headBH.style.display = activeCat==='Braveheart' ? 'grid' : 'none';
+
+      const info = CAT_INFO[activeCat];
+      const sorted = getSorted(activeCat);
+      const leaderScore = sorted.length ? sorted[0].score : 0;
+      const isBH = activeCat === 'Braveheart';
+
+      if(sorted.length === 0){
+        leaderBanner.innerHTML = '<div class="leader-empty">Belum ada data untuk kategori ' + activeCat + '.</div>';
+        tableBody.innerHTML = '<div class="empty-state"><p>Tabel standing masih kosong</p></div>';
+        return;
+      }
+
+      const l = sorted[0];
+      const leadName = isBH ? l.namaAtlet : l.kontingen;
+      const leadMeta = isBH ? ('Kontingen ' + escapeHtml(l.kontingen)) : ('Nilai ' + fmtNum(l.nilai) + ' &middot; Waktu ' + (l.waktu || '—'));
+      leaderBanner.innerHTML = `
+        <div class="leader-card ${info.cls}">
+          <div class="leader-avatar">${initials(leadName)}</div>
+          <div class="leader-mid">
+            <div class="leader-tag"><span class="dot"></span>Leader</div>
+            <div class="leader-name">${escapeHtml(leadName)}</div>
+            <div class="leader-meta">${leadMeta}</div>
+          </div>
+          <div class="leader-score-box">
+            <div class="lbl">${isBH ? 'Waktu' : 'Score'}</div>
+            <div class="val">${isBH ? (l.waktu || fmtNum(l.score)) : fmtNum(l.score)}</div>
+          </div>
+        </div>`;
+
+      tableBody.innerHTML = sorted.map((row, i)=>{
+        const rank = i+1;
+        let gapHtml = '';
+        if(rank > 1){
+          const diff = info.order === 'asc' ? (row.score - leaderScore) : (leaderScore - row.score);
+          gapHtml = '<div class="gap">' + (info.order === 'asc' ? '+' : '-') + fmtNum(Math.abs(diff)) + '</div>';
+        }
+        if(isBH){
+          return `
+          <div class="row rank-${rank} bh">
+            <div class="rank-num">${rank}</div>
+            <div class="name-cell">
+              <div class="nm">${escapeHtml(row.namaAtlet)}</div>${gapHtml}
+              <div class="sub-data"><span>${escapeHtml(row.kontingen)}</span><span>${row.waktu || '—'}</span></div>
+            </div>
+            <div class="data-cell"><div class="v">${escapeHtml(row.kontingen)}</div></div>
+            <div class="score-box bh"><div class="v">${row.waktu || fmtNum(row.score)}</div></div>
+          </div>`;
+        }
+        return `
+        <div class="row rank-${rank} hl">
+          <div class="rank-num">${rank}</div>
+          <div class="name-cell">
+            <div class="nm">${escapeHtml(row.kontingen)}</div>${gapHtml}
+            <div class="sub-data"><span>Nilai ${fmtNum(row.nilai)}</span><span>${row.waktu || '—'}</span></div>
+          </div>
+          <div class="data-cell"><div class="v">${fmtNum(row.nilai)}</div></div>
+          <div class="data-cell"><div class="v">${row.waktu || '—'}</div></div>
+          <div class="score-box hl"><div class="v">${fmtNum(row.score)}</div></div>
+        </div>`;
+      }).join('');
+    }
+
+    tabHL.addEventListener('click', ()=> { activeCat = 'Hoselaying'; render(); });
+    tabBH.addEventListener('click', ()=> { activeCat = 'Braveheart'; render(); });
+    render();
+  </script>
 </body>
 </html>
