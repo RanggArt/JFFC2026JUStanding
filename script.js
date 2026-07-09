@@ -62,7 +62,7 @@ animate();
     {"id":"1783568136702lv8m4olq4od","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Singgih","waktu":"06:20","score":380},
     {"id":"1783568634407by880n6ll7a","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Viky Ferdiansyah","waktu":"06:41","score":401},
     {"id":"178356865832271t6eifddo6","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Handoyo","waktu":"05:38","score":338},
-    {"id":"1783568676958vb7jh1fm4fg","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"Raihan Akbar","waktu":"08:59","score":539},
+    {"id":"1783568676958vb7jh1fm4fg","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"M. Raihan Abizar","waktu":"08:59","score":539},
     {"id":"1783568720892887e3ipnd13","kategori":"Braveheart","kontingen":"Kepulauan Seribu Utara","namaAtlet":"Budi Kurniawan","waktu":"08:09","score":489},
     {"id":"1783568751882sh69iyj903l","kategori":"Braveheart","kontingen":"Kelapa Gading","namaAtlet":"Alfredo","waktu":"10:21","score":621},
     {"id":"17835687822632am468qv7j9","kategori":"Braveheart","kontingen":"Pademangan","namaAtlet":"Kahidar","waktu":"10:30","score":630},
