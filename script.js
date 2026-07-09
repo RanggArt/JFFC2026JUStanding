@@ -63,9 +63,19 @@ animate();
 // ==========================================
 (function(){
   const STORAGE_KEY = 'jffc_standing_kontingen_v3';
-  let data = [];
+  
+  let data = [
+    {"id":"1783568136702lv8m4olq4od","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Singgih","waktu":"06:20","score":380},
+    {"id":"1783568634407by880n6ll7a","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Viky Ferdiansyah","waktu":"06:41","score":401},
+    {"id":"178356865832271t6eifddo6","kategori":"Braveheart","kontingen":"Seksi Operasi","namaAtlet":"Handoyo","waktu":"05:38","score":338},
+    {"id":"1783568676958vb7jh1fm4fg","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"Raihan Akbar","waktu":"08:59","score":539},
+    {"id":"1783568720892887e3ipnd13","kategori":"Braveheart","kontingen":"Kepulauan Seribu Utara","namaAtlet":"Budi Kurniawan","waktu":"08:09","score":489},
+    {"id":"1783568751882sh69iyj903l","kategori":"Braveheart","kontingen":"Kelapa Gading","namaAtlet":"Alfredo","waktu":"10:21","score":621},
+    {"id":"17835687822632am468qv7j9","kategori":"Braveheart","kontingen":"Pademangan","namaAtlet":"Kahidar","waktu":"10:30","score":630},
+    {"id":"17835688264747qufwxn9ay8","kategori":"Braveheart","kontingen":"Penjaringan","namaAtlet":"Rico Sahroni","waktu":"10:06","score":606}
+  ];
+  let activeCat = 'Braveheart';
   let editing = null;
-  let activeCat = 'Hoselaying';
 
   const leaderBanner = document.getElementById('leaderBanner');
   const tableBody = document.getElementById('tableBody');
@@ -92,15 +102,22 @@ animate();
   const tabBH = document.getElementById('tabBH');
 
   const CAT_INFO = {
-    Hoselaying: { cls:'hl', rule:'Peringkat berdasarkan Nilai Akhir/Score TERTINGGI', order:'desc', hint:'Nilai Akhir/Score TERTINGGI = peringkat 1.' },
-    Braveheart: { cls:'bh', rule:'Peringkat individu atlet berdasarkan WAKTU TERCEPAT (terendah)', order:'asc', hint:'Waktu TERCEPAT (terendah) = peringkat 1.' }
+    Hoselaying: { cls:'hl', rule:'Peringkat berdasarkan Nilai Akhir/Score TERTINGGI', order:'desc' },
+    Braveheart: { cls:'bh', rule:'Peringkat individu atlet berdasarkan WAKTU TERCEPAT (terendah)', order:'asc' }
   };
 
   function load(){
-    try{ const raw = localStorage.getItem(STORAGE_KEY); data = raw ? JSON.parse(raw) : []; }
-    catch(e){ data = []; }
+    try{ 
+      const raw = localStorage.getItem(STORAGE_KEY); 
+      if(raw) {
+        let savedData = JSON.parse(raw);
+        if (savedData.length > 0) data = savedData;
+      }
+    }
+    catch(e){}
     data.forEach(d => { if(!d.id) d.id = Date.now().toString() + Math.random().toString(36).substring(2); });
   }
+
   function save(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){} }
 
   function fmtNum(n){ const num = Number(n)||0; return num % 1 === 0 ? num.toString() : num.toFixed(2); }
@@ -172,6 +189,7 @@ animate();
     if(sorted.length === 0){
       tableBody.innerHTML = `
         <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
           <p>Tabel standing ${activeCat} masih kosong</p>
         </div>`;
       return;
@@ -185,6 +203,7 @@ animate();
         const prefix = info.order === 'asc' ? '+' : '-';
         gapHtml = `<div class="gap">${prefix}${fmtNum(Math.abs(diff))}</div>`;
       }
+      
       const rowKey = `data-id="${row.id}"`;
 
       if(isBH){
@@ -199,7 +218,9 @@ animate();
           <div class="data-cell"><div class="v">${escapeHtml(row.kontingen)}</div></div>
           <div class="score-box bh"><div class="v">${row.waktu || fmtNum(row.score)}</div></div>
           <div class="row-actions">
-            <button class="del-btn" data-del-id="${row.id}" title="Hapus">Hapus</button>
+            <button class="del-btn" data-del-id="${row.id}" title="Hapus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </button>
           </div>
         </div>`;
       }
@@ -215,7 +236,9 @@ animate();
         <div class="data-cell"><div class="v">${row.waktu || '—'}</div></div>
         <div class="score-box hl"><div class="v">${fmtNum(row.score)}</div></div>
         <div class="row-actions">
-          <button class="del-btn" data-del-id="${row.id}" title="Hapus">Hapus</button>
+          <button class="del-btn" data-del-id="${row.id}" title="Hapus">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
         </div>
       </div>`;
     }).join('');
@@ -249,6 +272,8 @@ animate();
   }
   optHL.addEventListener('click', ()=>{ if(!editing) setFormCat('Hoselaying'); });
   optBH.addEventListener('click', ()=>{ if(!editing) setFormCat('Braveheart'); });
+
+  function currentFormCat(){ return optBH.classList.contains('active') ? 'Braveheart' : 'Hoselaying'; }
 
   function openDrawer(){ drawer.classList.add('open'); overlay.classList.add('open'); }
   function closeDrawer(){
@@ -302,7 +327,11 @@ animate();
       const score = parseWaktuToSeconds(waktu);
       
       let idx = editing ? data.findIndex(d => d.id === editing.id) : -1;
-      const rowObj = { id: editing ? editing.id : Date.now().toString(), kategori, kontingen, namaAtlet, waktu, score };
+      const rowObj = { 
+        id: editing ? editing.id : (Date.now().toString() + Math.random().toString(36).substring(2)), 
+        kategori, kontingen, namaAtlet, waktu, score 
+      };
+      
       if(idx >= 0) data[idx] = rowObj; else data.push(rowObj);
     } else {
       const nilai = parseFloat(inpNilai.value) || 0;
@@ -310,10 +339,17 @@ animate();
       const score = parseFloat(inpScore.value) || 0;
       
       let idx = -1;
-      if (editing) idx = data.findIndex(d => d.id === editing.id);
-      else idx = data.findIndex(d => d.kategori === 'Hoselaying' && d.kontingen === kontingen);
+      if (editing) {
+          idx = data.findIndex(d => d.id === editing.id);
+      } else {
+          idx = data.findIndex(d => d.kategori === 'Hoselaying' && d.kontingen === kontingen);
+      }
       
-      const rowObj = { id: idx >= 0 ? data[idx].id : Date.now().toString(), kategori, kontingen, nilai, waktu, score };
+      const rowObj = { 
+        id: idx >= 0 ? data[idx].id : (Date.now().toString() + Math.random().toString(36).substring(2)), 
+        kategori, kontingen, nilai, waktu, score 
+      };
+      
       if(idx >= 0) data[idx] = rowObj; else data.push(rowObj);
     }
 
@@ -331,45 +367,37 @@ animate();
   // 3. FITUR EXPORT (DOWNLOAD) HTML VIEW-ONLY
   // ==========================================
   document.getElementById('shareBtn').addEventListener('click', ()=>{
-    // Template ini membawa data kamu saat ini namun tanpa tombol aksi (read-only)
     const exportHTMLString = `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JFFC 2026 — Standing Kontingen (Read Only)</title>
+  
+  <!-- Memanggil Fonts (Termasuk Racing Sans One untuk gaya MotoGP) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Racing+Sans+One&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Menghilangkan tombol agar menjadi view-only */
+    /* Menghilangkan hover klik dan menyembunyikan tombol input/delete */
     .row:hover { border-color: var(--line); background: rgba(20,20,22,0.85); cursor: default; }
     .row-actions { display: none !important; }
     .fab-stack { display: none !important; }
+    .top-actions { display: none !important; }
   </style>
 </head>
 <body>
+  
   <canvas id="fireCanvas"></canvas>
   <img src="assets/bghutjak_kiri.png" class="bg-kiri" alt="Ornamen Kiri">
   <img src="assets/bghutjak_kanan.png" class="bg-kanan" alt="Ornamen Kanan">
   
   <div id="app">
-    <header>
-      <div class="brand">
-        <div class="mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2c1 3-2 4-2 7a2 2 0 0 0 4 0c1 1 2 2 2 4a5 5 0 0 1-10 0c0-3 2-4 2-7 1 1 1 2 1 3 1-1 3-3 3-7Z"/>
-          </svg>
-        </div>
-        <div class="brand-text">
-          <div class="eyebrow">Sudinkar Jakarta Utara · 2026</div>
-          <div class="title">JAKARTA FIREFIGHTER CHALLENGE</div>
-        </div>
-      </div>
-    </header>
 
     <div class="hero">
+      <img src="assets/logodamjak5.png" alt="Logo Damkar" class="main-logo">
       <div class="eyebrow">Jakarta Firefighter Challenge 2026</div>
       <h1 id="heroTitle">HOSELAYING</h1>
       <div class="sub">Pemadam Jakarta Utara</div>
@@ -396,11 +424,9 @@ animate();
   </div>
 
   <script>
-    // Data klasemen disuntikkan langsung di file ekspor ini
     const data = ${JSON.stringify(data)};
     let activeCat = '${activeCat}';
 
-    // Animasi Api
     const canvas = document.getElementById('fireCanvas');
     const ctx = canvas.getContext('2d');
     let sparks = [];
@@ -440,7 +466,6 @@ animate();
     }
     animate();
 
-    // Fungsi Render Tabel Read-Only
     const leaderBanner = document.getElementById('leaderBanner');
     const tableBody = document.getElementById('tableBody');
     const tableWrap = document.getElementById('tableWrap');
@@ -544,7 +569,6 @@ animate();
 </body>
 </html>`;
 
-    // 2. Buat file Blob dari String Template di atas lalu otomatis download
     const blob = new Blob([exportHTMLString], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     
@@ -557,7 +581,8 @@ animate();
     URL.revokeObjectURL(url);
   });
 
+  // ===================== INIT =====================
   load();
-  setFormCat('Hoselaying');
+  setFormCat(activeCat);
   render();
 })();
